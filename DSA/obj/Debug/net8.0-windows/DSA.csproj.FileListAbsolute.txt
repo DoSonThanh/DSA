@@ -1,0 +1,14 @@
+G:\Đỗ Sơn Thành\Project\School\DSA\bin\Debug\net8.0-windows\DSA.exe
+G:\Đỗ Sơn Thành\Project\School\DSA\bin\Debug\net8.0-windows\DSA.deps.json
+G:\Đỗ Sơn Thành\Project\School\DSA\bin\Debug\net8.0-windows\DSA.runtimeconfig.json
+G:\Đỗ Sơn Thành\Project\School\DSA\bin\Debug\net8.0-windows\DSA.dll
+G:\Đỗ Sơn Thành\Project\School\DSA\bin\Debug\net8.0-windows\DSA.pdb
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\DSA.GeneratedMSBuildEditorConfig.editorconfig
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\DSA.AssemblyInfoInputs.cache
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\DSA.AssemblyInfo.cs
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\DSA.csproj.CoreCompileInputs.cache
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\DSA.dll
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\refint\DSA.dll
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\DSA.pdb
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\DSA.genruntimeconfig.cache
+G:\Đỗ Sơn Thành\Project\School\DSA\obj\Debug\net8.0-windows\ref\DSA.dll
