@@ -1,5 +1,7 @@
 public class HTMLParserSolution1
 {
+    // 1. CHUYỂN ĐỔI CHUỖI INPUT THÀNH HÀNG ĐỢI KÝ TỰ (CHAR TO QUEUE)
+    // Thay vì xử lý string, ném từng ký tự vào Queue để thao tác sau này.
     public MyQueue CharToQueue(string html)
     {
         MyQueue queue = new MyQueue();
@@ -8,7 +10,8 @@ public class HTMLParserSolution1
         return queue;
     }
 
-    // Tách toàn bộ tag
+    // 2. TÁCH CÁC THẺ HTML TỪ HÀNG ĐỢI (EXTRACT TAGS)
+    // Duyệt Queue, gặp '<' thì bắt đầu gom, gặp '>' thì ngắt.
     public List<string> ExtractTags(MyQueue queue)
     {
         List<string> tags = new List<string>();
@@ -33,103 +36,88 @@ public class HTMLParserSolution1
             else if (inside)
                 cur += c;
         }
-
         return tags;
     }
 
-    // Check hợp lệ bằng Queue, code dễ hiểu nhất
+    // 3. LÀM SẠCH VÀ LỌC THẺ (HELPER FUNCTIONS)
+    // Xóa mấy dấu thừa (<, >, /) để lấy tên thẻ sạch (ví dụ: <div> -> div)
+    private string CleanTagName(string raw)
+    {
+        string s = raw.Replace("<", "").Replace(">", "").Replace("/", "").Trim();
+        int idx = s.IndexOf(' '); 
+        if (idx > 0) s = s.Substring(0, idx);
+        return s.ToLower();
+    }
+
+    // Check thẻ đặc biệt không cần đóng (br, img...) -> Gặp bọn này thì bỏ qua
+    private bool IsVoidTag(string name)
+    {
+        string[] voids = { "br", "hr", "img", "input", "meta", "link" };
+        foreach (string v in voids) if (v == name) return true;
+        return false;
+    }
+
+    // 4. KIỂM TRA TÍNH HỢP LỆ DÙNG 2 QUEUE (PING-PONG TECH)
+    // Đây là phần khó nhất: Queue là FIFO, nhưng check thẻ cần LIFO (Stack).
+    // Giải pháp: Dùng 2 Queue (open & temp). Đổ qua đổ lại để lấy phần tử cuối cùng.
     public bool ValidateTags(List<string> tags)
     {
-        MyQueue open = new MyQueue();    // chứa tên thẻ mở
-        MyQueue temp = new MyQueue();    // phục vụ lấy phần tử cuối
+        MyQueue open = new MyQueue();    
+        MyQueue temp = new MyQueue();    
 
         foreach (string tag in tags)
         {
-            if (tag.StartsWith("</"))
-            {
-                string closeName = tag.Replace("</", "").Replace(">", "");
+            // Bỏ qua DOCTYPE và Comment ()
+            if (tag.StartsWith("<!")) continue; 
 
-                // Không có thẻ mở nào → sai
+            string cleanName = CleanTagName(tag);
+            
+            // Nếu là thẻ tự đóng thì bỏ qua
+            if (tag.EndsWith("/>") || IsVoidTag(cleanName)) continue;
+
+            if (tag.StartsWith("</")) // Thẻ đóng
+            {
                 if (open.IsEmpty()) return false;
 
-                // Lấy thẻ mở cuối cùng (mô phỏng stack)
                 string lastOpen = null;
-
-                // Di chuyển từ open sang temp, giữ lastOpen
+                
+                // KỸ THUẬT PING-PONG:
+                // Đổ hết từ 'open' sang 'temp' để tìm thằng cuối cùng (đáy Queue)
                 while (!open.IsEmpty())
                 {
                     object x = open.Dequeue();
-
-                    if (open.IsEmpty())       // x là phần tử cuối
-                        lastOpen = (string)x;
-                    else
-                        temp.Enqueue(x);      // chưa phải cuối, đưa vào tạm
+                    if (open.IsEmpty()) lastOpen = (string)x; 
+                    else temp.Enqueue(x);
                 }
 
-                // Khớp sai → trả false
-                if (lastOpen != closeName)
-                {
-                    // Restore rồi trả false
-                    temp.Enqueue(lastOpen);
-                    while (!temp.IsEmpty())
-                        open.Enqueue(temp.Dequeue());
-                    return false;
-                }
+                // So sánh thẻ đóng hiện tại với thẻ mở vừa tìm được
+                if (lastOpen != cleanName) return false;
 
-                // Khớp đúng → bỏ lastOpen, restore phần còn lại
-                while (!temp.IsEmpty())
-                    open.Enqueue(temp.Dequeue());
+                // Đổ ngược lại từ 'temp' về 'open' để tiếp tục vòng sau
+                while (!temp.IsEmpty()) open.Enqueue(temp.Dequeue());
             }
-            else
+            else // Thẻ mở
             {
-                string openName = tag.Replace("<", "").Replace(">", "");
-                open.Enqueue(openName);
+                open.Enqueue(cleanName);
             }
         }
-
-        // Còn thẻ mở dư → sai
-        if (!open.IsEmpty()) return false;
-
-        return true;
+        // Nếu Queue rỗng tức là tất cả thẻ đã được đóng cặp hoàn hảo
+        return open.IsEmpty();
     }
 
+    // 5. TRÍCH XUẤT NỘI DUNG VĂN BẢN (EXTRACT TEXT)
+    // Chỉ lấy chữ cái không nằm trong cặp ngoặc < >
     public string ExtractText(MyQueue queue)
     {
         string result = "";
         bool inside = false;
-
         while (!queue.IsEmpty())
         {
             char c = (char)queue.Dequeue();
-
             if (c == '<') inside = true;
             else if (c == '>') inside = false;
             else if (!inside) result += c;
         }
-
         return result.Trim();
     }
-
-    public string Parse(string html)
-    {
-        MyQueue charQ = CharToQueue(html);
-
-        // copy
-        string all = "";
-        while (!charQ.IsEmpty())
-            all += (char)charQ.Dequeue();
-
-        // tách tag
-        List<string> tags = ExtractTags(CharToQueue(all));
-
-        // validate
-        if (!ValidateTags(tags))
-            return "HTML không hợp lệ!";
-
-        // extract text
-        string text = ExtractText(CharToQueue(all));
-
-        return text;
-    }
 }
-
