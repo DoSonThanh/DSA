@@ -4,7 +4,7 @@ public class HTMLParserSolution2
 {
     // 1. CHUYỂN ĐỔI CHUỖI INPUT THÀNH HÀNG ĐỢI CHUỖI (STRING -> QUEUE)
     // Giúp nạp dữ liệu vào Queue để các thuật toán bên dưới có cái mà xử lý
-    private MyQueue StringToQueue(string html)
+    public MyQueue StringToQueue(string html)
     {
         MyQueue q = new MyQueue();
         foreach (char c in html) q.Enqueue(c);
@@ -123,7 +123,7 @@ public class HTMLParserSolution2
         return sb.ToString().Trim();
     }
 
-    // 4. HÀM TỔNG HỢP (PARSE WRAPPER)
+    // 5. HÀM TỔNG HỢP (PARSE WRAPPER)
     // Chạy lần lượt: Lấy thẻ -> Check lỗi -> Lấy Text
     public string Parse(string html)
     {
@@ -133,4 +133,5 @@ public class HTMLParserSolution2
         return ExtractText(html);
     }
 }
+
 
