@@ -138,7 +138,7 @@ public class HTMLParserSolution2
             }
         }
 
-        return sb.ToString().Trim();
+        return finalSb.ToString().Trim();
     }
 
     // 5. HÀM TỔNG HỢP (PARSE WRAPPER)

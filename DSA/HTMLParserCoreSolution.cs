@@ -10,13 +10,13 @@ public class HTMLParserSolution2
         foreach (char c in html) q.Enqueue(c);
         return q;
     }
-    
+
     // 2. QUÉT THẺ THEO CƠ CHẾ TRƯỢT (SLIDING WINDOW)
     // Không cần chuyển sang Queue, duyệt string trực tiếp cho nhanh.
     public List<string> SlidingTagScan(string html)
     {
         MyQueue queue = StringToQueue(html);
-        
+
         List<string> tags = new List<string>();
         bool insideTag = false;
         string currentTag = "";
@@ -65,7 +65,7 @@ public class HTMLParserSolution2
     // Cải tiến: Chỉ dùng 1 Queue duy nhất để giả lập Stack.
     public bool CheckTags(List<string> tags)
     {
-        MyQueue queue = new MyQueue(); 
+        MyQueue queue = new MyQueue();
 
         foreach (var tag in tags)
         {
@@ -73,7 +73,7 @@ public class HTMLParserSolution2
             if (tag.StartsWith("<!")) continue;
 
             string cleanName = CleanTagName(tag);
-            
+
             if (tag.EndsWith("/>") || IsVoidTag(cleanName)) continue;
 
             if (tag.StartsWith("</"))
@@ -93,9 +93,9 @@ public class HTMLParserSolution2
 
                 if (last != cleanName) return false;
             }
-            else 
+            else
             {
-                queue.Enqueue(cleanName);   
+                queue.Enqueue(cleanName);
             }
         }
         return queue.IsEmpty();
@@ -107,15 +107,15 @@ public class HTMLParserSolution2
     {
         // Nạp vào Queue
         MyQueue queue = StringToQueue(html);
-        
-        StringBuilder sb = new StringBuilder(); 
+
+        StringBuilder sb = new StringBuilder();
         bool inside = false;
-        
+
         // Lấy nội dung thô
         while (!queue.IsEmpty())
         {
             char c = (char)queue.Dequeue();
-            
+
             if (c == '<') inside = true;
             else if (c == '>') inside = false;
             else if (!inside) sb.Append(c);
@@ -123,22 +123,22 @@ public class HTMLParserSolution2
 
         // Tách chuỗi thô thành các dòng (Làm sạch, căn trái, xóa dòng trống)
         string rawText = sb.ToString();
-        
+
         // Tách dòng và loại bỏ các dòng trống ngay lập tức
         string[] lines = rawText.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
-        
+
         StringBuilder finalSb = new StringBuilder();
         foreach (string line in lines)
         {
             string cleanLine = line.Trim(); // Căn trái sát lề
-            
+
             if (cleanLine.Length > 0)
             {
                 finalSb.AppendLine(cleanLine); // AppendLine tự động thêm \n
             }
         }
 
-        return sb.ToString().Trim();
+        return finalSb.ToString().Trim();
     }
 
     // 5. HÀM TỔNG HỢP (PARSE WRAPPER)
