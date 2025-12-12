@@ -122,9 +122,9 @@ class Program
 
         // BƯỚC 6.1: TÁCH THẺ 
         // Đo xem thuật toán nào bóc tách thẻ HTML nhanh hơn.
-        MyQueue tempQ = s1.CharToQueue(html); 
         
         timer.StartTime();
+        MyQueue tempQ = s1.CharToQueue(html); 
         s1_Tags = s1.ExtractTags(tempQ);
         timer.StopTime();
         double t1_S1 = timer.Result().TotalMilliseconds;
