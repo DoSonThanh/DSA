@@ -1,0 +1,5 @@
+G:\Đỗ Sơn Thành\Project\School\DSA\DSA\DSA\publish\DSA.exe
+G:\Đỗ Sơn Thành\Project\School\DSA\DSA\DSA\publish\DSA.dll
+G:\Đỗ Sơn Thành\Project\School\DSA\DSA\DSA\publish\DSA.deps.json
+G:\Đỗ Sơn Thành\Project\School\DSA\DSA\DSA\publish\DSA.runtimeconfig.json
+G:\Đỗ Sơn Thành\Project\School\DSA\DSA\DSA\publish\DSA.pdb
