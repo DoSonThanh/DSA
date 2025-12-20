@@ -1,5 +1,3 @@
-"DSA so sánh" là phần của Phong phục vụ cho việc so sánh thuật toán
-"DSA" là phần winform đã được làm xong
-
-báo cáo mấy ông bắt đầu ở phần winform trước do tôi với phong vẫn chưa có đảm bảo rằng là phần so sánh là đúng
-phần so sánh sẽ được hỏi và chốt lại vào thứ 4
+DSA_sosanh là phần code thuật toán so sánh do Lê Trung Phong đảm nhận phần code chính
+DSA là phần code thuật toán winform sử dụng parser được cung cấp ở DSA_so sánh do Đỗ Sơn Thành đảm nhận phần code chính
+Báo cáo sẽ do Nguyễn Phước Thuần và Nguyễn Tuấn Khôi đảm nhận
